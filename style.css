@@ -1,0 +1,229 @@
+:root {
+  --blade-hue: 300;
+  --blade-lightness: 50%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: hsl(0, 0%, 13%);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 100px 50px 1fr;
+  min-height: 100vh;
+  place-items: center;
+  font-family: "Poppins";
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+[name="color"] {
+  grid-row: 1 / 2;
+  align-self: end;
+  margin: 0.5em;
+}
+
+label:not(.hilt) {
+  color: hsl(0, 0%, 100%);
+  font-weight: bold;
+  align-self: start;
+}
+
+.lightsaber {
+  margin-top: 35vh;
+  grid-column: 1 / -1;
+  position: relative;
+}
+
+#on-off {
+  position: absolute;
+  width: 0.4em;
+  height: 0.4em;
+  top: 2rem;
+  right: 1em;
+}
+
+#on-off:checked {
+  position: absolute;
+  width: 0.4em;
+  height: 0.4em;
+  top: 2rem;
+  right: 1em;
+  accent-color: red;
+}
+
+.hilt {
+  cursor: pointer;
+  display: block;
+  width: 1rem;
+  height: 8.5rem;
+  background: hsl(0, 100%, 50%);
+  background-image: linear-gradient(
+    black 0 1px,
+    silver 3px,
+    black 0 4px,
+    hsl(51, 93%, 41%) 8px,
+    black 0 10px,
+    silver 15px,
+    black 0 20px,
+    silver 45px,
+    black 0 59px,
+    silver 62px,
+    black 0 67px,
+    silver 70px,
+    black 0 75px,
+    silver 78px,
+    black 0 83px,
+    silver 86px,
+    black 0 91px,
+    silver 94px,
+    black 0 99px,
+    silver 102px,
+    black 0 123px,
+    silver
+  );
+}
+
+.ball {
+  position: relative;
+  height: 0.9em;
+  width: 0.9em;
+  background: hsl(0, 100%, 50%);
+  top: 8rem;
+  right: 0.15rem;
+  border-radius: 20% 20% 80% 80%;
+  background-image: linear-gradient(
+    black 0 2px,
+    silver 6px,
+    hsl(51, 99%, 36%) 0 7px,
+    black 0 15px,
+    silver
+  );
+}
+
+.block {
+  position: relative;
+  height: 1.8em;
+  width: 0.8em;
+  border-radius: 10%;
+  background: hsl(0, 100%, 50%);
+  right: 0.07rem;
+  bottom: 0.4rem;
+  background-image: linear-gradient(
+    black 0 2px,
+    silver 4px,
+    black 0 6px,
+    silver 8px,
+    hsl(51, 99%, 36%) 0 10px,
+    black 0 12px,
+    silver 16px,
+    black 0 18px,
+    silver 35px,
+    black 0 37px,
+    silver
+  );
+}
+
+.block2 {
+  position: relative;
+  height: 1em;
+  width: 0.8em;
+  border-radius: 10%;
+  background: hsl(0, 100%, 50%);
+  right: 0.07rem;
+  top: 2rem;
+  background-image: linear-gradient(
+    black 0 3px,
+    silver 20px,
+    black 0 22px,
+    silver 24px,
+    black
+  );
+}
+
+.block3 {
+  position: relative;
+  height: 0.2em;
+  width: 0.9em;
+  border-radius: 0 0 40% 40%;
+  background: hsl(0, 100%, 50%);
+  right: 0.15rem;
+  bottom: 3.9em;
+  background-image: linear-gradient(silver 2px, black);
+}
+
+.blade {
+  position: absolute;
+  width: 0.6em;
+  height: 24rem;
+  background: white;
+  left: 0.09rem;
+  bottom: 100%;
+  border-radius: 100vw 100vw 0 0;
+  box-shadow: 0 0 1em hsl(var(--blade-hue) 100% var(--blade-lightness) / 1),
+    0 0 2em hsl(var(--blade-hue) 100% var(--blade-lightness) / 1),
+    0 0 5em hsl(var(--blade-hue) 100% var(--blade-lightness) / 1),
+    inset 0 0 0.3em hsl(var(--blade-hue) 100% var(--blade-lightness) / 0.8);
+  animation: pulse linear 3s infinite;
+  transition: transform 75ms ease-out;
+  transform-origin: bottom;
+}
+
+.blade::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: hsl(var(--blade-hue) 100% var(--blade-lightness));
+  border-radius: inherit;
+  filter: blur(2em);
+  opacity: 1;
+}
+
+#on-off:not(:checked) + .blade {
+  transform: scaleY(0);
+}
+
+#on-off:checked + .blade {
+  transform: scaleY(1);
+}
+
+input[id="Green"]:checked ~ .lightsaber {
+  --blade-hue: 120;
+}
+
+input[id="Blue"]:checked ~ .lightsaber {
+  --blade-hue: 200;
+}
+
+input[id="Yellow"]:checked ~ .lightsaber {
+  --blade-hue: 60;
+}
+
+input[id="Red"]:checked ~ .lightsaber {
+  --blade-hue: 360;
+}
+
+/* Sound only works in some browsers */
+
+embed {
+  display: none;
+  opacity: 0;
+}
+
+#on-off:checked ~ embed {
+  display: block;
+  position: absolute;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.8;
+  }
+}
